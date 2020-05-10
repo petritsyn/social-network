@@ -8,7 +8,6 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import {Route} from "react-router-dom";
-import {updateNewMessageText} from "./redux/state";
 
 
 const App = (props) => {
@@ -18,15 +17,15 @@ const App = (props) => {
         <Header/>
         <Navbar/>
         <div className='app-wrapper-content'>
-          <Route path='/profile' render={ () => <Profile profilePage={props.state.profilePage}
-                                                         addPost={props.addPost}
-                                                         newPostText={props.state.profilePage.newPostText}
-                                                         updateNewPostText={props.updateNewPostText}
+          <Route path='/profile' render={ () => <Profile profilePage={props.store.state.profilePage}
+                                                         addPost={props.store.addPost}
+                                                         newPostText={props.store.state.profilePage.newPostText}
+                                                         updateNewPostText={props.store.updateNewPostText}
           /> } />
-          <Route path='/dialogs' render={ () => <Dialogs state={props.state.dialogsPage}
-                                                         addMessage={props.addMessage}
-                                                         updateNewMessageText={props.updateNewMessageText}
-                                                         newMessageText={props.state.dialogsPage.newMessageText} /> } />
+          <Route path='/dialogs' render={ () => <Dialogs state={props.store.state.dialogsPage}
+                                                         addMessage={props.store.addMessage}
+                                                         updateNewMessageText={props.store.updateNewMessageText}
+                                                         newMessageText={props.store.state.dialogsPage.newMessageText} /> } />
           <Route path='/news' render={ () => <News />} />
           <Route path='/music' render={ () => <Music />} />
           <Route path='/settings' render={ () => <Settings />} />
