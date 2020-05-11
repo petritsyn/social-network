@@ -1,7 +1,3 @@
-let rerenderEntireTree = () => {
-
-}
-
 let store = {
   _state: {
     profilePage: {
@@ -33,38 +29,45 @@ let store = {
       newMessageText: ''
     }
   },
+  _callSubscriber() {
+    console.log('State changed')
+  },
+
   getState() {
     return this._state;
   },
-  addPost(postMessage) {
-    let newPost = {
-      id: 5,
-      message: postMessage,
-      likesCount: 0
-    }
-    store._state.profilePage.posts.push(newPost);
-    store._state.profilePage.newPostText = '';
-    rerenderEntireTree(store._state);
+  subscribe(observer) {
+    this._callSubscriber = observer;
   },
-  updateNewPostText(newText) {
-    store._state.profilePage.newPostText = newText;
-    rerenderEntireTree(store._state);
-  },
+
+
   addMessage(textMessage) {
     let newMessage = {
       id: 7,
       message: textMessage
     }
-    store._state.dialogsPage.messages.push(newMessage);
-    store._state.dialogsPage.newMessageText = '';
-    rerenderEntireTree(store._state);
+    this._state.dialogsPage.messages.push(newMessage);
+    this._state.dialogsPage.newMessageText = '';
+    this._callSubscriber(this._state);
   },
   updateNewMessageText(newMessageText) {
-    store._state.dialogsPage.newMessageText = newMessageText;
-    rerenderEntireTree(store._state);
+    this._state.dialogsPage.newMessageText = newMessageText;
+    this._callSubscriber(this._state);
   },
-  subscribe(observer) {
-    rerenderEntireTree = observer;
+  dispatch(action) {
+    if (action.type === 'ADD-POST') {
+      let newPost = {
+        id: 5,
+        message: this._state.profilePage.newPostText,
+        likesCount: 0
+      };
+      this._state.profilePage.posts.push(newPost);
+      this._state.profilePage.newPostText = '';
+      this._callSubscriber(this._state);
+    } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+      this._state.profilePage.newPostText = action.newText;
+      this._callSubscriber(this._state);
+    }
   }
 }
 
