@@ -7,7 +7,7 @@ let store = {
         {id: 3, message: 'Second post', likesCount: 10},
         {id: 4, message: 'Its my first post.', likesCount: 11}
       ],
-      newPostText: ''
+      newPostText: 'Hi'
     },
     dialogsPage: {
       messages: [
@@ -26,7 +26,7 @@ let store = {
         {id: 5, name: 'Victor'},
         {id: 6, name: 'Valera'},
       ],
-      newMessageText: ''
+      newMessageText: 'Hello'
     }
   },
   _callSubscriber() {
@@ -41,7 +41,7 @@ let store = {
   },
 
 
-  addMessage(textMessage) {
+  /*addMessage(textMessage) {
     let newMessage = {
       id: 7,
       message: textMessage
@@ -53,7 +53,8 @@ let store = {
   updateNewMessageText(newMessageText) {
     this._state.dialogsPage.newMessageText = newMessageText;
     this._callSubscriber(this._state);
-  },
+  },*/
+
   dispatch(action) {
     if (action.type === 'ADD-POST') {
       let newPost = {
@@ -66,6 +67,17 @@ let store = {
       this._callSubscriber(this._state);
     } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
       this._state.profilePage.newPostText = action.newText;
+      this._callSubscriber(this._state);
+    } else if (action.type === 'ADD-MESSAGE') {
+      let newMessage = {
+        id: 7,
+        message: this._state.dialogsPage.newMessageText
+      }
+      this._state.dialogsPage.messages.push(newMessage);
+      this._state.dialogsPage.newMessageText = '';
+      this._callSubscriber(this._state);
+    } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+      this._state.dialogsPage.newMessageText = action.newMessageText;
       this._callSubscriber(this._state);
     }
   }
