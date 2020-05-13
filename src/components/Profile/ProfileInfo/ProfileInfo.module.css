@@ -1,3 +1,8 @@
 .descriptionBlock {
     padding: 10px;
 }
+
+.mainPage img {
+    height: 200px;
+    width: 100%;
+}
