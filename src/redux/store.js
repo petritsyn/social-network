@@ -31,7 +31,7 @@ let store = {
                 {id: 5, name: 'Victor'},
                 {id: 6, name: 'Valera'},
             ],
-            newMessageText: 'Hello'
+            newMessageText: ''
         }
     },
     _callSubscriber() {

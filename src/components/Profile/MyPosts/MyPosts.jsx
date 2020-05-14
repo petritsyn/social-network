@@ -14,8 +14,8 @@ const MyPosts = (props) => {
         props.dispatch(addPostAC());
     };
 
-    let onPostChange = () => {
-        let newText = newPostElement.current.value;
+    let onPostChange = (e) => {
+        let newText = e.target.value;
         props.dispatch(updateNewPostTextAC(newText));
     };
 
