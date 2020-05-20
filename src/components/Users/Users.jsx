@@ -1,27 +1,16 @@
 import React from "react";
 import styless from './users.module.css'
+import * as axios from 'axios';
+import userPhoto from './../../assets/images/user.png'
 
 
 let Users = (props) => {
 
-  if(props.users.length === 0) {
-    props.setUsers([{
-      id: 1,
-      photoUrl: 'https://im0-tub-ru.yandex.net/i?id=337f64b3058accd22fa35ba31a86fcdc&n=13',
-      fullName: 'Andrew',
-      status: 'I am a boss',
-      followed: true,
-      location: {country: 'Russia', city: 'Moscow'}
-    },
-      {
-        id: 2,
-        photoUrl: 'https://im0-tub-ru.yandex.net/i?id=337f64b3058accd22fa35ba31a86fcdc&n=13',
-        fullName: 'Alina',
-        status: 'I am a boss too',
-        followed: false,
-        location: {country: 'France', city: 'Paris'}
-      }
-    ])
+  if (props.users.length === 0) {
+    axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+      props.setUsers(response.data.items)
+    })
+
   }
 
   return <div>
@@ -29,7 +18,7 @@ let Users = (props) => {
       props.users.map(u => <div key={u.id}>
         <span>
           <div>
-            <img className={styless.photo} src={u.photoUrl}/>
+            <img className={styless.photo} src={u.photos.small !== null ? u.photos.small : userPhoto}/>
           </div>
           <div>{u.followed ? <button onClick={() => {
             props.unfollow(u.id)
@@ -37,7 +26,7 @@ let Users = (props) => {
             props.follow(u.id)
           }}>Follow</button>}</div>
           <div>
-            {u.fullName}
+            {u.name}
           </div>
         </span>
         <span>
@@ -45,10 +34,10 @@ let Users = (props) => {
             {u.status}
           </div>
           <div>
-            {u.location.country}
+            {/*{u.location.country}*/}
           </div>
           <div>
-            {u.location.city}
+            {/*{u.location.city}*/}
           </div>
         </span>
       </div>)
