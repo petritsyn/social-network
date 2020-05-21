@@ -8,10 +8,10 @@ import store from './redux/redux-store';
 
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App store={store}/>
-  </BrowserRouter>,
-  document.getElementById('root'));
+    <BrowserRouter>
+        <App store={store}/>
+    </BrowserRouter>,
+    document.getElementById('root'));
 
 
 // If you want your app to work offline and load faster, you can change
