@@ -5,11 +5,14 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import store from './redux/redux-store';
+import {Provider} from "react-redux";
 
 
 ReactDOM.render(
     <BrowserRouter>
-        <App store={store}/>
+        <Provider store={store}>
+            <App/>
+        </Provider>
     </BrowserRouter>,
     document.getElementById('root'));
 
@@ -18,3 +21,5 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+window.store = store;
