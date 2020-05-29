@@ -11,3 +11,11 @@
   grid-area: n;
   background-color: burlywood;
 }
+
+.loginBlock {
+  float: right;
+}
+
+.loginBlock a {
+  color: white;
+}
