@@ -8,7 +8,6 @@ import {
     setTotalUsersCount,
     toggleIsFetching
 } from '../../redux/users-reducer';
-import * as axios from 'axios';
 import Users from './Users';
 import Preloader from "../common/Preloader/Preloader";
 import {usersAPI} from "../../api/api";
@@ -57,29 +56,6 @@ let mapStateToProps = (state) => {
         isFetching: state.usersPage.isFetching
     }
 };
-
-/*const mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (usersId) => {
-            dispatch(followAC(usersId))
-        },
-        unfollow: (usersId) => {
-            dispatch(unfollowAC(usersId))
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (pageNumber) => {
-            dispatch(setCurrentPageAC(pageNumber))
-        },
-        setTotalUsersCount: (totalCount) => {
-            dispatch(setUsersTotalCountAC(totalCount))
-        },
-        toggleIsFetching: (isFetching) => {
-            dispatch(toggleFethcingAC(isFetching))
-        }
-    }
-};*/
 
 
 export default connect(mapStateToProps, {

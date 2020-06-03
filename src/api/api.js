@@ -24,3 +24,21 @@ export const usersAPI = {
             })
     }
 };
+
+export const authAPI = {
+    auth() {
+        return instance.get(`auth/me`,)
+            .then(response => {
+                return response.data
+            })
+    }
+};
+
+export const profileAPI = {
+    getProfile(userId) {
+        instance.get(`profile/` + userId)
+            .then(response => {
+                return response.data
+            })
+    }
+};
