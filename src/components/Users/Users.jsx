@@ -31,22 +31,24 @@ let Users = (props) => {
                 <img className={styles.photo} src={u.photos.small !== null ? u.photos.small : userPhoto}/>
               </NavLink>
           </div>
-          <div>{u.followed ? <button onClick={() => {
-
+          <div>{u.followed ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+              props.toggleFollowingProgress(true, u.id);
               usersAPI.unfollow(u.id)
                   .then(data => {
                       if (data.resultCode === 0) {
                           props.unfollow(u.id)
                       }
+                      props.toggleFollowingProgress(false, u.id);
                   });
 
-          }}>Unfollow</button> : <button onClick={() => {
-
+          }}>Unfollow</button> : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
+              props.toggleFollowingProgress(true, u.id);
               usersAPI.follow(u.id)
                   .then(data => {
                       if (data.resultCode === 0) {
                           props.follow(u.id)
                       }
+                      props.toggleFollowingProgress(false, u.id);
                   });
 
           }}>Follow</button>}</div>
