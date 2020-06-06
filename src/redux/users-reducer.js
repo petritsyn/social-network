@@ -85,6 +85,18 @@ export const getUsers = (currentPage, pageSize) => {
     }
 };
 
+export const getUsers2 = (pageNumber) => {
+    return (dispatch) => {
+        dispatch(setCurrentPage(pageNumber));
+        dispatch(toggleIsFetching(true));
+        usersAPI.getUsers2(pageNumber)
+            .then(data => {
+                dispatch(toggleIsFetching(false));
+                dispatch(setUsers(data.items));
+            });
+    }
+};
+
 export const follow = (userId) => {
     return (dispatch) => {
         dispatch(toggleFollowingProgress(true, userId));

@@ -50,7 +50,7 @@ export const authAPI = {
 
 export const profileAPI = {
     getProfile(userId) {
-        instance.get(`profile/` + userId)
+        return instance.get(`profile/` + userId)
             .then(response => {
                 return response.data
             })
