@@ -17,7 +17,7 @@ export const usersAPI = {
             })
     },
 
-    getUsers2(currentPage = 1, pageSize = 10) {
+    changeUsers(currentPage = 1, pageSize = 10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data

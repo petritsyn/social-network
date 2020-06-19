@@ -85,11 +85,11 @@ export const getUsers = (currentPage, pageSize) => {
     }
 };
 
-export const getUsers2 = (pageNumber) => {
+export const changeUsers = (pageNumber) => {
     return (dispatch) => {
         dispatch(setCurrentPage(pageNumber));
         dispatch(toggleIsFetching(true));
-        usersAPI.getUsers2(pageNumber)
+        usersAPI.changeUsers(pageNumber)
             .then(data => {
                 dispatch(toggleIsFetching(false));
                 dispatch(setUsers(data.items));
