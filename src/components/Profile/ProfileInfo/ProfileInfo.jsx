@@ -11,13 +11,10 @@ const ProfileInfo = (props) => {
 
     return (
         <div>
-           {/* <div className={s.mainPage}>
-                <img src="https://www.w3schools.com/howto/img_snow_wide.jpg"/>
-            </div>*/}
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
                 ava + description
-                <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
+                <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
             </div>
         </div>
     )
