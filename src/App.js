@@ -38,7 +38,7 @@ class App extends Component {
                     <Route path='/' render={() => <Redirect to={'profile'}/>}/>
                     <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                     <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                    <Route path='/users' render={() => <UsersContainer/>}/>
+                    <Route path='/users' render={() => <UsersContainer pageTitle={'Samurai'}/>}/>
                     <Route path='/news' render={withSuspense(News)}/>
                     <Route path='/music' render={withSuspense(Music)}/>
                     <Route path='/settings' render={withSuspense(Settings)}/>

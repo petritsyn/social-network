@@ -1,10 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, DefaultRootState} from 'react-redux';
 import {
     follow,
-    unfollow,
-    setCurrentPage,
-    toggleFollowingProgress, requestUsers, changeUsers
+    unfollow, requestUsers, changeUsers
 } from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from "../common/Preloader/Preloader";
@@ -18,19 +16,45 @@ import {
     getTotalUsersCount,
     getUsers
 } from "../../redux/users-selectors";
+import {usersType} from "../../types/types";
+import {appStateType} from "../../redux/redux-store";
 
-class UsersContainer extends React.Component {
+
+type mapStatePropsType = {
+    users: Array<usersType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
+    followingInProgress: Array<number>
+}
+
+type mapDispatchPropsType = {
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    requestUsers: (currentPage: number, pageSize: number) => void
+    changeUsers: (pageNumber: number) => void
+}
+
+type ownPropsType = {
+    pageTitle: string
+}
+
+type propsType = mapStatePropsType & mapDispatchPropsType & ownPropsType;
+
+class UsersContainer extends React.Component<propsType> {
 
     componentDidMount() {
         this.props.requestUsers(this.props.currentPage, this.props.pageSize);
     }
 
-    onPageChanged = (pageNumber) => {
+    onPageChanged = (pageNumber: number) => {
         this.props.changeUsers(pageNumber);
     };
 
     render() {
         return <div>
+            <h2>{this.props.pageTitle}</h2>
             <div>{this.props.isFetching ? <Preloader/> : null}</div>
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
@@ -45,7 +69,7 @@ class UsersContainer extends React.Component {
     }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: appStateType): mapStatePropsType => {
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
@@ -57,11 +81,9 @@ let mapStateToProps = (state) => {
 };
 
 export default compose(
-    connect(mapStateToProps, {
+    connect<mapStatePropsType, mapDispatchPropsType, ownPropsType, appStateType>(mapStateToProps, {
         follow,
         unfollow,
-        setCurrentPage,
-        toggleFollowingProgress,
         requestUsers,
         changeUsers
     }),
