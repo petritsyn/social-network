@@ -1,4 +1,4 @@
-import {authAPI, securityAPI} from "../api/api";
+import {authAPI, ResultCodeForCaptchaEnum, ResultCodesEnum, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA';
@@ -59,7 +59,7 @@ export let getCaptchaUrlSuccess = (captchaUrl: string): getCaptchaUrlSuccessActi
 export const getAuthUserData = () => {
     return async (dispatch: any) => {
         let data = await authAPI.me();
-        if (data.resultCode === 0) {
+        if (data.resultCode === ResultCodesEnum.Success) {
             let {id, email, login} = data.data;
             dispatch(setAuthUsersData(id, email, login, true));
         }
@@ -68,14 +68,14 @@ export const getAuthUserData = () => {
 
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => {
     return async (dispatch: any) => {
-        let response = await authAPI.login(email, password, rememberMe, captcha);
-        if (response.data.resultCode === 0) {
+        let data = await authAPI.login(email, password, rememberMe, captcha);
+        if (data.resultCode === ResultCodesEnum.Success) {
             dispatch(getAuthUserData());
         } else {
-            if (response.data.resultCode === 10) {
+            if (data.resultCode === ResultCodeForCaptchaEnum.Captcha) {
                 dispatch(getCaptchaUrl())
             }
-            let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error';
+            let message = data.messages.length > 0 ? data.messages[0] : 'Some error';
             dispatch(stopSubmit('login', {_error: message}));
         }
     }
@@ -84,7 +84,7 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 export const logout = () => {
     return async (dispatch: any) => {
         let response = await authAPI.logout();
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === ResultCodesEnum.Success) {
             dispatch(setAuthUsersData(null, null, null, false));
         }
     }
